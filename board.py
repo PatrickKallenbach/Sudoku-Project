@@ -1,9 +1,12 @@
-import pygame
 from constants import *
 from pygame import *
+from sudoku_generator import *
+
 
 pygame.init()
 screen = pygame.display.set_mode((width, height))
+
+board = SudokuGenerator(9, 30)
 
 class Board:
     # constructor for the Board class
@@ -64,7 +67,7 @@ class Board:
     # marks the cell as the current selected cell
     # must select cell before user can edit value or sketched value
     def select(self, row, col):
-        selected_cell = self.board[row, col]
+        selected_cell = board[row, col]
         return selected_cell
 
     # returns tuple of (row, col) if x and y are on the board -if not, returns None
@@ -80,9 +83,9 @@ class Board:
     def clear(self):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_BACKSPACE:
-                self.board.set_cell_value(' ')
+                board.set_cell_value(' ')
                 screen.fill(bg_color)
-                self.board.draw()
+                board.draw()
                 pygame.display.update()
 
     # sets the sketched value of the selected cell to equal user input
@@ -93,11 +96,10 @@ class Board:
     def place_number(self, value):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ENTER:
-                self.board.set_cell_value(value)
+                board.set_cell_value(value)
                 screen.fill(bg_color)
-                self.board.draw()
+                board.draw()
                 pygame.display.update()
-
 
 
     while True:
